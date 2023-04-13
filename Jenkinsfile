@@ -80,16 +80,48 @@ pipeline {
                 
 //              }
 //         }
-        stage('deploy'){
-            steps{
-                script{
-                    def dockerRestart = 'sudo service docker restart'
-                    def dockerRunCmd = "sudo docker run -p 8080:8080 -d 20it151/practical:${IMAGE_NAME}"
-                  sshagent(['ec2-prod']) {
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@54.237.0.178 ${dockerRunCmd}"
-                    }  
-                }
+     stage('deploy') {
+
+//           sshagent(['Production']) {
+
+//               // some block
+
+//           }
+
+        input{
+
+            message "Select the environment to deploy"
+
+            ok "done"
+
+            parameters{
+
+                choice(name: 'Type', choices:['Dev','Test','Deploy'], description: '')
+
             }
+
+
+
+
+        }
+
+            steps {
+
+                script{echo 'deploying the application...'
+
+                withCredentials([usernamePassword(credentialsId: 'docker', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
+
+                    sh "echo ${PASSWORD} | docker login -u ${USERNAME} --password-stdin"
+
+                    sh "docker push 20it151/practical:${IMAGE_NAME}"
+
+                }}
+
+
+
+
+             }
+
         }
 
         // stage('commit and push to git'){
