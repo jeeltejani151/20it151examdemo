@@ -62,7 +62,7 @@ pipeline {
                 sh 'mvn test'}
             }
         }
-      stage('push') {
+      //stage('push') {
         // input{
         //     message "Select the environment to deploy"
         //     ok "done"
@@ -71,15 +71,15 @@ pipeline {
         //     }
 
         // }
-            steps {
-                script{echo 'deploying the application'
-                withCredentials([usernamePassword(credentialsId: 'docker', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
-                    sh "echo ${PASSWORD} | docker login -u ${USERNAME} --password-stdin"
-                    sh "docker push 20it151/practical:${IMAGE_NAME}"
-                }}
+//            // steps {
+//                 script{echo 'deploying the application'
+//                 withCredentials([usernamePassword(credentialsId: 'docker', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
+//                     sh "echo ${PASSWORD} | docker login -u ${USERNAME} --password-stdin"
+//                     sh "docker push 20it151/practical:${IMAGE_NAME}"
+//                 }}
                 
-             }
-        }
+//              }
+//         }
         stage('deploy'){
             steps{
                 script{
