@@ -6,10 +6,7 @@ pipeline {
         NEW_VERSION = '1.3'
     }
 
-    parameters {
-        choice(name: 'VERSION', choices:['1','2', '3'], description: '')
-        booleanParam(name: 'executeTest', defaultValue : true, description: '')
-    }
+
     
     tools{
         maven 'maven-3.9.0'
@@ -88,22 +85,7 @@ pipeline {
 
 //           }
 
-        input{
 
-            message "Select the environment to deploy"
-
-            ok "done"
-
-            parameters{
-
-                choice(name: 'Type', choices:['Dev','Test','Deploy'], description: '')
-
-            }
-
-
-
-
-        }
 
             steps {
 
